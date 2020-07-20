@@ -4,10 +4,18 @@ const session=require('express-session');
 const cookieParser=require('cookie-parser');
 const path=require('path');
 const flash=require('connect-flash');
+const passport=require('passport');// +추가
 require('dotenv').config();
 
-const app=express();
 const pageRouter=require('./routes/page');
+const authRouter=require('./routes/auth');
+
+const {sequelize}=require('./models');// +추가
+const passportConfig=require('./passport');// +추가, require('./passport/index.js')
+
+const app=express();
+sequelize.sync(); //+추가
+passportConfig(passport);//+추가
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -28,8 +36,12 @@ app.use(session({
   }
 }));
 app.use(flash());
+app.use(passport.initialize()); //+추가, req객체에 passport 설정을 심는다
+app.use(passport.session()); //+추가, req.session객체에 passport 정보를 저장한다, 무조건 express-session 미들웨어보다 뒤에
+
 
 app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 app.use((req,res, next)=>{
   const err=new Error('Not Found');

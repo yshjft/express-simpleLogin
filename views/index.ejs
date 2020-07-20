@@ -9,7 +9,7 @@
 <body>
   <%-include('title')%>
   <div>
-    <form>
+    <form method='POST' action='/auth/login'>
       <div>
         <div><label for='email'>Email</label></div>
         <input id='email' type='email' name='email' placeholder='email' required></input>
@@ -22,7 +22,7 @@
     </form>
     <div>
       if you don't have an account?
-      <a href='/signin'>SIGN IN</a>
+      <a href='/join'>JOIN</a>
     </div>
   </div>
 </body>

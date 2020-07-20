@@ -7,6 +7,26 @@
 </head>
 <body>
   <%-include('title')%>
+  <button onclick='logout()'>로그아웃</button>
   
+  <script>
+    function logout(){
+      const xhr=new XMLHttpRequest();
+      xhr.onload=function(){
+        if(xhr.status===200 || xhe.status===201){
+          console.log("성공");
+          location.href='/';
+        }
+      }
+
+      xhr.onerror=function(){
+        console.error(xhr.responseText);
+      }
+
+      xhr.open('POST', '/auth/logout');
+      xhr.send();
+
+    }
+  </script>
 </body>
 </html>
