@@ -4,7 +4,12 @@ const {isLoggedIn, isNotLoggedIn} = require('./middlewares');
 const router=express.Router();
 
 router.get('/', isNotLoggedIn, (req, res)=>{
-  res.render('index', {title : 'simple_login'});
+  res.render('index', 
+    {
+      title : 'simple_login',
+      user:req.user,
+      loginError:req.flash('loginError'),
+    });
 });
 
 router.get('/join', isNotLoggedIn, (req,res)=>{
@@ -12,7 +17,7 @@ router.get('/join', isNotLoggedIn, (req,res)=>{
     {
       title : 'join',
       user:req.user,
-      //joinError : req.flash('joinError);
+      joinError : req.flash('joinError'),
     });
 });
 
@@ -21,7 +26,6 @@ router.get('/after-login', isLoggedIn, (req, res)=>{
     {
       title : 'after-login',
       user:req.user,
-      // loginError:req.flash('loginError'),
     }
   );
 });
