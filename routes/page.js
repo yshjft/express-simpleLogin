@@ -25,7 +25,7 @@ router.get('/after-login', isLoggedIn, (req, res)=>{
   res.render('afterLogin', 
     {
       title : 'after-login',
-      user:req.user,
+      nick : req.user.nick,
     }
   );
 });
